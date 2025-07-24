@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>n8n Workflow Templates Showcase</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        .controls {
+            padding: 30px 40px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .search-filter {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 300px;
+            padding: 12px 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 25px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .category-filter {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 8px 16px;
+            border: 2px solid #e9ecef;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .templates-grid {
+            padding: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .template-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            border: 1px solid #e9ecef;
+        }
+
+        .template-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .template-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .template-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-right: 15px;
+            color: white;
+        }
+
+        .template-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c3e50;
+            line-height: 1.3;
+        }
+
+        .template-category {
+            display: inline-block;
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .template-description {
+            color: #6c757d;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .template-size {
+            font-size: 12px;
+            color: #adb5bd;
+            margin-top: 10px;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6c757d;
+        }
+
+        .no-results h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .search-filter {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .templates-grid {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>n8n Workflow Templates</h1>
+            <p>Professional automation solutions for you</p>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-number" id="totalTemplates">86</span>
+                    <span class="stat-label">Templates</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="totalCategories">8</span>
+                    <span class="stat-label">Categories</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="visibleTemplates">79</span>
+                    <span class="stat-label">Showing</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="search-filter">
+                <input type="text" class="search-box" placeholder="Search templates..." id="searchInput">
+                <div class="category-filter" id="categoryFilter">
+                    <button class="category-btn active" data-category="all">All</button>
+                    <button class="category-btn" data-category="AI & Automation">AI & Automation</button>
+                    <button class="category-btn" data-category="Communication">Communication</button>
+                    <button class="category-btn" data-category="Productivity">Productivity</button>
+                    <button class="category-btn" data-category="Data & Analytics">Data & Analytics</button>
+                    <button class="category-btn" data-category="Content & Media">Content & Media</button>
+                    <button class="category-btn" data-category="Finance & Crypto">Finance & Crypto</button>
+                    <button class="category-btn" data-category="Health & Lifestyle">Health & Lifestyle</button>
+                    <button class="category-btn" data-category="Utilities">Utilities</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="templates-grid" id="templatesGrid">
+            <!-- Templates will be populated by JavaScript -->
+        </div>
+
+        <div class="no-results" id="noResults" style="display: none;">
+            <h3>No templates found</h3>
+            <p>Try adjusting your search or filter criteria</p>
+        </div>
+    </div>
+
+    <script>
+        const templates = [
+            { name: "AI Agent to Publish Blog on Hashnode", category: "AI & Automation", icon: "🤖", size: "9.1 KB", description: "Automated blog publishing using AI agents for Hashnode platform" },
+            { name: "AI Assistant", category: "AI & Automation", icon: "🧠", size: "4.9 KB", description: "General-purpose AI assistant for various tasks" },
+            { name: "AutoSummerise.ai", category: "AI & Automation", icon: "📝", size: "4.8 KB", description: "Automatic content summarization using AI" },
+            { name: "Birthday Auto-Celebrator", category: "Communication", icon: "🎂", size: "4.2 KB", description: "Automated birthday wishes and celebrations" },
+            { name: "Calendar", category: "Productivity", icon: "📅", size: "3.1 KB", description: "Calendar management and scheduling automation" },
+            { name: "Chat Bot to Sheet", category: "Data & Analytics", icon: "💬", size: "3.8 KB", description: "Store chatbot conversations in spreadsheets" },
+            { name: "CryptoAlerts", category: "Finance & Crypto", icon: "₿", size: "2.3 KB", description: "Cryptocurrency price alerts and notifications" },
+            { name: "Currency Converter", category: "Finance & Crypto", icon: "💱", size: "4.5 KB", description: "Real-time currency conversion automation" },
+            { name: "Daily Inspiration Bot", category: "Health & Lifestyle", icon: "✨", size: "3.6 KB", description: "Daily motivational quotes and inspiration" },
+            { name: "Daily Journal Log", category: "Productivity", icon: "📔", size: "1.6 KB", description: "Automated daily journaling system" },
+            { name: "Digital Detox", category: "Health & Lifestyle", icon: "📱", size: "2.8 KB", description: "Digital wellness and screen time management" },
+            { name: "Discord Sleep Bot", category: "Communication", icon: "😴", size: "4.8 KB", description: "Discord bot for sleep tracking and reminders" },
+            { name: "Email Classifier", category: "Productivity", icon: "📧", size: "9.9 KB", description: "Intelligent email categorization and sorting" },
+            { name: "Email Inbox", category: "Productivity", icon: "📬", size: "6.2 KB", description: "Advanced email inbox management" },
+            { name: "Events & Festivals", category: "Productivity", icon: "🎪", size: "3.5 KB", description: "Event and festival tracking system" },
+            { name: "Expense Insight Bot", category: "Finance & Crypto", icon: "💰", size: "6.6 KB", description: "Personal expense tracking and insights" },
+            { name: "Extract Transcript", category: "Content & Media", icon: "🎙️", size: "3.2 KB", description: "Audio/video transcript extraction" },
+            { name: "Faceless YT Channel", category: "Content & Media", icon: "📺", size: "7.8 KB", description: "Automated YouTube channel management" },
+            { name: "FireWatch", category: "Utilities", icon: "🔥", size: "8.7 KB", description: "Fire monitoring and alert system" },
+            { name: "Fun Facts", category: "Content & Media", icon: "🤓", size: "2.3 KB", description: "Daily fun facts generator" },
+            { name: "Funny Jokes", category: "Content & Media", icon: "😂", size: "2.0 KB", description: "Automated joke delivery system" },
+            { name: "GhostAudit", category: "Data & Analytics", icon: "👻", size: "7.6 KB", description: "Website audit and monitoring tool" },
+            { name: "Goal Tracker", category: "Productivity", icon: "🎯", size: "3.6 KB", description: "Personal goal tracking and progress monitoring" },
+            { name: "Habit Tracker", category: "Health & Lifestyle", icon: "✅", size: "7.8 KB", description: "Daily habit formation and tracking" },
+            { name: "Idea Collector", category: "Productivity", icon: "💡", size: "4.4 KB", description: "Capture and organize creative ideas" },
+            { name: "Inbox Zero", category: "Productivity", icon: "📭", size: "2.4 KB", description: "Email inbox management for zero inbox" },
+            { name: "Lead Magnet", category: "Data & Analytics", icon: "🧲", size: "9.7 KB", description: "Lead generation and capture automation" },
+            { name: "LinkedIn Auto Poster", category: "Content & Media", icon: "💼", size: "9.7 KB", description: "Automated LinkedIn content posting" },
+            { name: "Maintaining Content Record", category: "Content & Media", icon: "📊", size: "1.7 KB", description: "Content creation tracking and records" },
+            { name: "Milestone Tracker", category: "Productivity", icon: "🏆", size: "4.3 KB", description: "Project milestone tracking system" },
+            { name: "Mood Based Music", category: "Health & Lifestyle", icon: "🎵", size: "2.7 KB", description: "Music recommendations based on mood" },
+            { name: "Morning Checklist", category: "Productivity", icon: "🌅", size: "1.6 KB", description: "Daily morning routine checklist" },
+            { name: "Motivation Email", category: "Communication", icon: "💪", size: "2.7 KB", description: "Automated motivational email sender" },
+            { name: "Google Sheet Email Alert", category: "Utilities", icon: "📊", size: "2.3 KB", description: "Email alerts for new Google Sheet rows" },
+            { name: "News Feed", category: "Content & Media", icon: "📰", size: "3.0 KB", description: "Personalized news feed aggregator" },
+            { name: "NewsSweep", category: "Content & Media", icon: "🗞️", size: "3.4 KB", description: "News monitoring and summarization" },
+            { name: "PDF Questions (RAG)", category: "AI & Automation", icon: "📄", size: "7.1 KB", description: "PDF document Q&A using RAG technology" },
+            { name: "Phishing URL Detector", category: "Utilities", icon: "🛡️", size: "5.9 KB", description: "Malicious URL detection and protection" },
+            { name: "Price Tracker", category: "Finance & Crypto", icon: "💲", size: "4.3 KB", description: "Product price monitoring and alerts" },
+            { name: "PulseDrop", category: "Communication", icon: "💧", size: "4.5 KB", description: "Pulse monitoring and notification system" },
+            { name: "RAG Chatbot for Company Documents", category: "AI & Automation", icon: "🤖", size: "12.2 KB", description: "Enterprise document chatbot using Google Drive and Gemini" },
+            { name: "RAG Agent", category: "AI & Automation", icon: "🔍", size: "7.4 KB", description: "Retrieval-Augmented Generation agent" },
+            { name: "RSS Feed", category: "Content & Media", icon: "📡", size: "3.3 KB", description: "RSS feed aggregation and management" },
+            { name: "Recipe Generator Bot", category: "Health & Lifestyle", icon: "👨‍🍳", size: "4.6 KB", description: "AI-powered recipe generation" },
+            { name: "Resume Analyzer Bot", category: "AI & Automation", icon: "📋", size: "5.0 KB", description: "Automated resume analysis and feedback" },
+            { name: "Resume Job Description Score", category: "Data & Analytics", icon: "📊", size: "2.3 KB", description: "Resume-job match scoring system" },
+            { name: "Spotify Mood Bot", category: "Health & Lifestyle", icon: "🎧", size: "4.9 KB", description: "Spotify playlist based on mood analysis" },
+            { name: "StealthPulse", category: "Utilities", icon: "🕵️", size: "5.0 KB", description: "Stealth monitoring and pulse checking" },
+            { name: "Text to Voice", category: "Content & Media", icon: "🗣️", size: "2.0 KB", description: "Text-to-speech conversion automation" },
+            { name: "Today in History", category: "Content & Media", icon: "📚", size: "3.2 KB", description: "Historical events for today's date" },
+            { name: "Blog Updates Notifier", category: "Communication", icon: "📝", size: "2.4 KB", description: "New blog post notification system" },
+            { name: "Water Reminder", category: "Health & Lifestyle", icon: "💧", size: "1.4 KB", description: "Hydration tracking and reminders" },
+            { name: "Weather Alert", category: "Utilities", icon: "🌤️", size: "4.0 KB", description: "Weather monitoring and alerts" },
+            { name: "Web Search (Serper)", category: "Utilities", icon: "🔍", size: "2.8 KB", description: "Web search automation using Serper API" },
+            { name: "WhatsApp Game", category: "Communication", icon: "🎮", size: "2.9 KB", description: "Interactive WhatsApp games" },
+            { name: "WhatsApp To-Do", category: "Productivity", icon: "✅", size: "4.4 KB", description: "WhatsApp-based task management" },
+            { name: "WhatsApp AutoReply", category: "Communication", icon: "🤖", size: "2.8 KB", description: "Automated WhatsApp responses" },
+            { name: "WhatsApp Chatbot", category: "Communication", icon: "💬", size: "4.6 KB", description: "Intelligent WhatsApp chatbot" },
+            { name: "WhatsApp Inbox", category: "Communication", icon: "📱", size: "4.6 KB", description: "WhatsApp message management" },
+            { name: "WhatsApp Quote Sender", category: "Communication", icon: "💭", size: "2.9 KB", description: "Daily quote sender for WhatsApp" },
+            { name: "WhatsApp Reminder", category: "Productivity", icon: "⏰", size: "4.9 KB", description: "WhatsApp-based reminder system" },
+            { name: "WhatsApp Templates", category: "Communication", icon: "📋", size: "2.1 KB", description: "WhatsApp message templates" },
+            { name: "WhisperPing", category: "Communication", icon: "🔔", size: "3.8 KB", description: "Subtle notification system" },
+            { name: "Agentic RAG Model", category: "AI & Automation", icon: "🧠", size: "6.3 KB", description: "Advanced agentic RAG implementation" },
+            { name: "Alert System", category: "Utilities", icon: "🚨", size: "5.5 KB", description: "General-purpose alert system" },
+            { name: "Appointment Scheduler", category: "Productivity", icon: "📅", size: "3.8 KB", description: "Automated appointment scheduling" },
+            { name: "Bitcoin Alert", category: "Finance & Crypto", icon: "₿", size: "3.1 KB", description: "Bitcoin price monitoring and alerts" },
+            { name: "Data Fetching", category: "Data & Analytics", icon: "📊", size: "7.3 KB", description: "Automated data collection and fetching" },
+            { name: "Data Processing", category: "Data & Analytics", icon: "⚙️", size: "6.4 KB", description: "Advanced data processing workflows" },
+            { name: "Decision Compass", category: "Productivity", icon: "🧭", size: "3.3 KB", description: "Decision-making assistance tool" },
+            { name: "Email to Drive", category: "Utilities", icon: "📧", size: "1.8 KB", description: "Email attachment to Google Drive" },
+            { name: "Image Downloader", category: "Content & Media", icon: "🖼️", size: "2.4 KB", description: "Automated image downloading" },
+            { name: "Micro Journal", category: "Health & Lifestyle", icon: "📝", size: "6.0 KB", description: "Quick daily micro-journaling" },
+            { name: "Personal Agent", category: "AI & Automation", icon: "👤", size: "5.0 KB", description: "Personal AI assistant agent" },
+            { name: "RSS to Email", category: "Communication", icon: "📧", size: "2.1 KB", description: "RSS feed to email converter" },
+            { name: "Transaction Data Structurer", category: "Finance & Crypto", icon: "💳", size: "13.3 KB", description: "Financial transaction data organization" },
+            { name: "Weather Bot", category: "Utilities", icon: "🌦️", size: "2.3 KB", description: "Weather information bot" },
+            { name: "Copy of Chat Bot to Sheet", category: "Data & Analytics", icon: "💬", size: "3.8 KB", description: "Duplicate chatbot to spreadsheet workflow" },
+            { name: "Copy of Chatbox", category: "Communication", icon: "💬", size: "2.7 KB", description: "Duplicate chatbox implementation" },
+            { name: "My Workflow 4", category: "Utilities", icon: "⚙️", size: "4.4 KB", description: "Custom workflow automation" },
+            { name: "Resume (Basic)", category: "Productivity", icon: "📄", size: "0.3 KB", description: "Basic resume template" },
+            { name: "Chatbox", category: "Communication", icon: "💬", size: "2.7 KB", description: "Interactive chatbox interface" },
+            { name: "Personal Agent (Advanced)", category: "AI & Automation", icon: "🤖", size: "11.6 KB", description: "Advanced personal AI assistant" },
+            { name: "RAG Agent (Q&A)", category: "AI & Automation", icon: "❓", size: "6.2 KB", description: "Question & Answer RAG system" },
+            { name: "Agentic RAG (Basic)", category: "AI & Automation", icon: "🧠", size: "6.0 KB", description: "Basic agentic RAG implementation" },
+            { name: "Decision Compass (Advanced)", category: "Productivity", icon: "🧭", size: "3.3 KB", description: "Advanced decision-making tool" }
+        ];
+
+        let filteredTemplates = [...templates];
+
+        function getIconColor(category) {
+            const colors = {
+                'AI & Automation': '#ff6b6b',
+                'Communication': '#4ecdc4',
+                'Productivity': '#45b7d1',
+                'Data & Analytics': '#96ceb4',
+                'Content & Media': '#feca57',
+                'Finance & Crypto': '#ff9ff3',
+                'Health & Lifestyle': '#54a0ff',
+                'Utilities': '#5f27cd'
+            };
+            return colors[category] || '#6c757d';
+        }
+
+        function renderTemplates(templatesToRender) {
+            const grid = document.getElementById('templatesGrid');
+            const noResults = document.getElementById('noResults');
+            
+            if (templatesToRender.length === 0) {
+                grid.style.display = 'none';
+                noResults.style.display = 'block';
+            } else {
+                grid.style.display = 'grid';
+                noResults.style.display = 'none';
+                
+                grid.innerHTML = templatesToRender.map(template => `
+                    <div class="template-card">
+                        <div class="template-header">
+                            <div class="template-icon" style="background: ${getIconColor(template.category)}">
+                                ${template.icon}
+                            </div>
+                            <div class="template-title">${template.name}</div>
+                        </div>
+                        <div class="template-category">${template.category}</div>
+                        <div class="template-description">${template.description}</div>
+                        <div class="template-size">Size: ${template.size}</div>
+                    </div>
+                `).join('');
+            }
+            
+            document.getElementById('visibleTemplates').textContent = templatesToRender.length;
+        }
+
+        function filterTemplates() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const activeCategory = document.querySelector('.category-btn.active').dataset.category;
+            
+            filteredTemplates = templates.filter(template => {
+                const matchesSearch = template.name.toLowerCase().includes(searchTerm) || 
+                                    template.description.toLowerCase().includes(searchTerm);
+                const matchesCategory = activeCategory === 'all' || template.category === activeCategory;
+                
+                return matchesSearch && matchesCategory;
+            });
+            
+            renderTemplates(filteredTemplates);
+        }
+
+        // Event listeners
+        document.getElementById('searchInput').addEventListener('input', filterTemplates);
+
+        document.getElementById('categoryFilter').addEventListener('click', (e) => {
+            if (e.target.classList.contains('category-btn')) {
+                document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+                filterTemplates();
+            }
+        });
+
+        // Initial render
+        renderTemplates(templates);
+    </script>
+</body>
+</html>

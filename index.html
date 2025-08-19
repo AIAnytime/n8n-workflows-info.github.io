@@ -467,7 +467,7 @@
             <div class="subtitle">✨ New workflows every week</div>
             <div class="stats">
                 <div class="stat-item">
-                    <span class="stat-number" id="totalTemplates">100+</span>
+                    <span class="stat-number" id="totalTemplates">150+</span>
                     <span class="stat-label">Agents</span>
                 </div>
                 <div class="stat-item">
@@ -475,7 +475,7 @@
                     <span class="stat-label">Industries</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-number" id="visibleTemplates">100+</span>
+                    <span class="stat-number" id="visibleTemplates">150+</span>
                     <span class="stat-label">Showing</span>
                 </div>
             </div>
@@ -525,6 +525,58 @@
 
     <script>
         const templates = [
+            // New workflows from Kodryx Phase 2 N8N folder
+            { name: "Gmail Attachments Drive Agent", category: "Productivity & Tools", icon: "📎", size: "6.3 KB", description: "Save Gmail attachments automatically to Google Drive" },
+            { name: "Currency Exchange Rates Agent", category: "Finance & Crypto", icon: "💱", size: "6.3 KB", description: "Track and monitor currency exchange rates" },
+            { name: "Project Management Agent", category: "Productivity & Tools", icon: "📋", size: "3.8 KB", description: "Project task tracking and management workflow" },
+            { name: "AI Blog Post Summarizer Agent", category: "AI & Machine Learning", icon: "📝", size: "7.2 KB", description: "Automatically summarize blog posts using AI" },
+            { name: "AI Customer Support Agent", category: "Communication & Social", icon: "🛎️", size: "10.2 KB", description: "Automated customer support system with AI integration" },
+            { name: "AI Daily Growth Companion Agent", category: "AI & Machine Learning", icon: "📈", size: "7.8 KB", description: "Daily AI assistant for personal and professional growth" },
+            { name: "AI Research Assistant Telegram Agent", category: "AI & Machine Learning", icon: "🔍", size: "7.2 KB", description: "Research assistant via Telegram powered by AI" },
+            { name: "AI Resume Screening Agent", category: "Business & Sales", icon: "📄", size: "6.4 KB", description: "Automated resume screening and candidate analysis" },
+            { name: "AI Chat Agent", category: "Communication & Social", icon: "💬", size: "2.8 KB", description: "Intelligent AI-powered chatbot for conversations" },
+            { name: "AI Meeting Summarizer Agent", category: "Productivity & Tools", icon: "📊", size: "10.6 KB", description: "Automatically summarize meeting recordings and notes" },
+            { name: "Knowledge-Based AI Agent", category: "AI & Machine Learning", icon: "📚", size: "7.5 KB", description: "AI agent with integrated knowledge base capabilities" },
+            { name: "Memory-Powered AI Agent", category: "AI & Machine Learning", icon: "🧠", size: "4.4 KB", description: "AI agent with persistent memory capabilities" },
+            { name: "Airtable Workflow Agent", category: "Productivity & Tools", icon: "📊", size: "4.8 KB", description: "Automated workflow integration with Airtable" },
+            { name: "Birthday Notification Agent", category: "Communication & Social", icon: "🎂", size: "4.7 KB", description: "Automated birthday reminders and notifications" },
+            { name: "Calendar Management Agent", category: "Productivity & Tools", icon: "📅", size: "3.9 KB", description: "Automated calendar management and scheduling" },
+            { name: "Currency Exchange Email Agent", category: "Finance & Crypto", icon: "📧", size: "2.6 KB", description: "Email notifications for currency exchange rates" },
+            { name: "Daily Motivation Quote Agent", category: "Healthcare & Wellness", icon: "💪", size: "3.2 KB", description: "Daily motivational quotes delivered automatically" },
+            { name: "Email Inbox Management Agent", category: "Productivity & Tools", icon: "📬", size: "6.2 KB", description: "Advanced email inbox organization and management" },
+            { name: "Gmail Spam Detector Agent", category: "Productivity & Tools", icon: "🛡️", size: "7.9 KB", description: "Automated spam detection for Gmail accounts" },
+            { name: "Order Processing Agent", category: "E-commerce & Retail", icon: "📦", size: "6.6 KB", description: "Automated order processing and fulfillment" },
+            { name: "Holiday Reminder Agent", category: "Productivity & Tools", icon: "🎉", size: "3.5 KB", description: "Public holiday notifications and reminders" },
+            { name: "Lead Qualification Agent", category: "Business & Sales", icon: "🎯", size: "3.4 KB", description: "Automated lead qualification and scoring" },
+            { name: "Resume Parser Agent", category: "Business & Sales", icon: "📋", size: "10.6 KB", description: "Extract and organize information from resumes" },
+            { name: "Stock Price Alert Agent", category: "Finance & Crypto", icon: "📈", size: "3.4 KB", description: "Stock price monitoring and email alerts" },
+            { name: "Telegram Bot Agent", category: "Communication & Social", icon: "🤖", size: "1.3 KB", description: "Custom Telegram bot for various automations" },
+            { name: "AI Telegram Agent", category: "AI & Machine Learning", icon: "📱", size: "6.6 KB", description: "AI-powered assistant for Telegram messaging" },
+            { name: "Translation Agent", category: "Productivity & Tools", icon: "🌐", size: "5.1 KB", description: "Automated translation between English and other languages" },
+            { name: "Weather Forecast Agent", category: "Productivity & Tools", icon: "🌤️", size: "3.8 KB", description: "Daily weather forecasts and updates" },
+            { name: "Weather Analysis Agent", category: "Data & Analytics", icon: "🌦️", size: "10.6 KB", description: "Comprehensive weather data analysis and reporting" },
+            { name: "Weather Alert Agent 2", category: "Productivity & Tools", icon: "⛈️", size: "3.1 KB", description: "Enhanced weather monitoring and alert system" },
+            { name: "Weekly Summary Agent", category: "Productivity & Tools", icon: "📅", size: "3.8 KB", description: "Weekly summary reports of activities and tasks" },
+            { name: "YouTube Comments Agent", category: "Content & Marketing", icon: "💬", size: "8.1 KB", description: "YouTube comment monitoring and management" },
+            { name: "YouTube Video Alert Agent", category: "Content & Marketing", icon: "🎬", size: "1.7 KB", description: "Email notifications for new YouTube videos" },
+            { name: "University Search Agent", category: "Data & Analytics", icon: "🎓", size: "3.9 KB", description: "AI-powered university search and information tool" },
+            { name: "Maps Email Extractor Agent", category: "Business & Sales", icon: "📍", size: "13.8 KB", description: "Extract company emails from Google Maps data" },
+            { name: "Price Comparison Agent", category: "E-commerce & Retail", icon: "💲", size: "7.6 KB", description: "Competitor price monitoring and comparison" },
+            { name: "Daily Sales Report Agent", category: "Business & Sales", icon: "💼", size: "3.5 KB", description: "Daily sales data compilation and reporting" },
+            { name: "Email Communication Agent", category: "Communication & Social", icon: "✉️", size: "3.2 KB", description: "Streamlined email communication management" },
+            { name: "Esports Match Alert Agent", category: "Media & Entertainment", icon: "🎮", size: "6.0 KB", description: "Notifications for upcoming esports matches" },
+            { name: "GitHub CI/CD Agent", category: "Productivity & Tools", icon: "⚙️", size: "7.6 KB", description: "GitHub commit to Jenkins CI/CD pipeline automation" },
+            { name: "Installation Tracker Agent", category: "Productivity & Tools", icon: "📆", size: "6.5 KB", description: "Track and manage software installation dates" },
+            { name: "Mail Processing Agent", category: "Productivity & Tools", icon: "📨", size: "11.2 KB", description: "Advanced mail processing and organization" },
+            { name: "Meeting Scheduler Agent", category: "Productivity & Tools", icon: "🗓️", size: "3.5 KB", description: "Automated meeting scheduling and coordination" },
+            { name: "Social Media Report Agent", category: "Content & Marketing", icon: "📊", size: "7.5 KB", description: "Monthly social media analytics and reporting" },
+            { name: "Resume Screening Advanced Agent", category: "Business & Sales", icon: "📝", size: "7.4 KB", description: "Enhanced resume screening with detailed analysis" },
+            { name: "Message Scheduling Agent", category: "Communication & Social", icon: "⏰", size: "3.1 KB", description: "Schedule and automate message sending" },
+            { name: "Slack Integration Agent", category: "Communication & Social", icon: "💬", size: "4.9 KB", description: "Workflow automation with Slack integration" },
+            { name: "WhatsApp Automation Agent", category: "Communication & Social", icon: "📱", size: "3.0 KB", description: "WhatsApp messaging automation workflows" },
+            { name: "WhatsApp Gmail Integration Agent", category: "Communication & Social", icon: "📨", size: "3.8 KB", description: "Integration between WhatsApp and Gmail services" },
+            { name: "Zero Trust Architecture Agent", category: "Productivity & Tools", icon: "🔒", size: "9.3 KB", description: "Zero Trust Architecture implementation workflow" },
+            
             // New workflows from new_workflows.txt
             { name: "Image Generation Agent", category: "AI & Machine Learning", icon: "🎨", size: "5.2 KB", description: "Generate prompt-based images using generative AI models" },
             { name: "Lead Generation Agent", category: "Business & Sales", icon: "🎯", size: "8.4 KB", description: "Lead generation via Apollo, Hunter and Apify agent workflow" },
